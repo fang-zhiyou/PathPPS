@@ -54,18 +54,18 @@ def run_algorithm():
         p: Point = open_set.get()
 
         if p.vec[0] == en.vec[0]:
-            tt = []
-            t = p
-            while True:
-                if t.vec[0] == st.vec[0]:
-                    x, y = hilbert_trans.d2xy_up(N, t.vec[0])
-                    tt.append((x, y))
-                    break
-                x, y = hilbert_trans.d2xy_up(N, t.vec[0])
-                tt.append((x, y))
-                t = t.parent
-            return tt
-            # return p.bc
+            # tt = []
+            # t = p
+            # while True:
+            #     if t.vec[0] == st.vec[0]:
+            #         x, y = hilbert_trans.d2xy_up(N, t.vec[0])
+            #         tt.append((x, y))
+            #         break
+            #     x, y = hilbert_trans.d2xy_up(N, t.vec[0])
+            #     tt.append((x, y))
+            #     t = t.parent
+            # return tt
+            return p.bc + 1
 
         # 处理邻居 d4
         t = p.vec[4]
@@ -168,4 +168,4 @@ def cache_init():
 
 
 def get_map_size():
-    return sys.getsizeof(H1) + sys.getsizeof(H2) + sys.getsizeof(H3) + sys.getsizeof(H4) + sys.getsizeof(D1) + sys.getsizeof(D2)
+    return sys.getsizeof(H1)
