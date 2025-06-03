@@ -5,35 +5,6 @@ from geopy.distance import geodesic
 from matplotlib import pyplot as plt
 
 
-def calculate_density():
-    def get_area(bbox):
-        coord1 = (bbox[1], bbox[0])
-        coord2 = (bbox[3], bbox[0])
-        x = round(geodesic(coord1, coord2).meters, 0)
-        coord1 = (bbox[3], bbox[2])
-        y = round(geodesic(coord1, coord2).meters, 0)
-        return x, y
-
-
-
-    # 1. 定义自定义边界框 [minx, miny, maxx, maxy]
-    bbox = (-119.59434, 39.74795, -119.54335, 39.78420) # 示例：北京某矩形区域
-    # 2. 获取该范围内的路网数据
-    graph = ox.graph.graph_from_bbox(bbox, network_type='drive')
-
-    # 3. 转换为GeoDataFrame并计算
-    gdf_edges = ox.graph_to_gdfs(graph, nodes=False)
-    total_length = gdf_edges['length'].sum() / 1000 # km
-    print(total_length)
-
-    w, h = get_area(bbox)
-    area = w * h / 1000000
-
-    density = total_length / area
-    print(density)
-    print(f"自定义区域路网密度: {density:.2f} km/km²")
-
-
 import cv2
 
 

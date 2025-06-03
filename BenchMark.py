@@ -29,7 +29,7 @@ for p in range(6):
     graph_data = np.load(dataset_path)
     choices = np.argwhere(graph_data == 1)
 
-    for i in range(500):
+    for i in range(1):
         rst = []
 
         print(f'--------------- 第{i + 1}次查询 ---------------')
@@ -70,7 +70,7 @@ for p in range(6):
         writer = csv.writer(file)
         writer.writerow(['PathPPS_len', 'PathPPS_time', 'Real_len', 'Acc'])  # 写入表头
         writer.writerows(exp_results)  # 写入多行
-        # writer.writerow(['HCM(ms):', hcm_time, 'MapSize(B):', PPPN1.get_map_size()])
+        writer.writerow(['HCM(ms):', hcm_time, 'MapSize(K):', PPPN1.get_map_size()/1024])
 
 
 

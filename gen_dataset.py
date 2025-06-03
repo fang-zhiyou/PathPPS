@@ -87,8 +87,8 @@ if __name__ == '__main__':
     # bboxC3 = (-119.59434, 39.74795, -119.54335, 39.78420)
 
 
-    box = (116.399827, 39.914378, 116.420972, 39.932243)
-    box_name = 'Beijing'
+    box = (-119.59434, 39.74795, -119.54335, 39.78420)
+    box_name = 'Sparse3'
 
     G = ox.graph.graph_from_bbox(box, network_type="walk")
     print(f'{box_name}，节点数量： {G.number_of_nodes()}, 边数量：{G.number_of_edges()}')
@@ -102,22 +102,30 @@ if __name__ == '__main__':
         for u, v in G_relabel.edges():
             file.write(f'{u} {v}\n')
 
-    img_path = f'datasets/{box_name}.png'
-    fig, ax = ox.plot.plot_graph(G, figsize=(20, 20), edge_color="w", edge_linewidth=4, save=True, filepath=img_path)
+    # 计算稠密度
+    gdf_edges = ox.graph_to_gdfs(G, nodes=False)
+    total_length = gdf_edges['length'].sum() / 1000  # km
+    w, h = get_area(box)
+    area = w * h / 1000000
+    density = total_length / area
+    print(f"自定义区域路网密度: {density:.2f} km/km²")
 
-
-    cell = 14 # 设置网格大小
-    w_cells = int(width) // cell
-    l_cells = int(length) // cell
-
-    print("网格图生成中...")
-    matrix2 = image_split(img_path, w_cells, l_cells, percent=0.2)
-    np.save(f'datasets/{box_name}.npy', matrix2)
-
-    print("网格图绘制中...")
-    grid_path = f'datasets/{box_name}_grid.png'
-    plot_grid_road(matrix2, save=True, filepath=grid_path)
-    print(f'网格数量：{w_cells * l_cells}')
+    # img_path = f'datasets/{box_name}.png'
+    # fig, ax = ox.plot.plot_graph(G, figsize=(20, 20), edge_color="w", edge_linewidth=4, save=True, filepath=img_path)
+    #
+    #
+    # cell = 14 # 设置网格大小
+    # w_cells = int(width) // cell
+    # l_cells = int(length) // cell
+    #
+    # print("网格图生成中...")
+    # matrix2 = image_split(img_path, w_cells, l_cells, percent=0.2)
+    # np.save(f'datasets/{box_name}.npy', matrix2)
+    #
+    # print("网格图绘制中...")
+    # grid_path = f'datasets/{box_name}_grid.png'
+    # plot_grid_road(matrix2, save=True, filepath=grid_path)
+    # print(f'网格数量：{w_cells * l_cells}')
 
 
 # cell = 64
@@ -132,24 +140,25 @@ if __name__ == '__main__':
 
 # CountrySide3，节点数量： 20, 边数量：42
 # 长度与宽度: (4025.0, 4368.0)
-# 0.69
+#1.08
 
 # Chicago
-# 32  0.2  drive
+# 32  drive
 # Chicago，节点数量： 908, 边数量：2562
 # 长度与宽度: (3786.0, 3747.0)
-# 22.91
+# 自定义区域路网密度: 22.91 km/km²
 
 # Feicheng
-# 14 0.2 drive
-# Feicheng，节点数量： 1331, 边数量：2438
+# 14 0.2 walk
+# Feicheng，节点数量： 2490, 边数量：7858
 # 长度与宽度: (2591.0, 2586.0)
+# 自定义区域路网密度: 62.99 km/km²
 
-# 27.77
+
 
 # Beijing，节点数量： 602, 边数量：1690
 # 长度与宽度: (1984.0, 1807.0)
-# 14 0.2 walk
+# 自定义区域路网密度: 36.83 km/km²
+# cell = 14 walk
 
-# 13.3    36.83
 
