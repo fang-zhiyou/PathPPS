@@ -3,7 +3,7 @@ import numpy as np
 
 
 result_path = 'Sparse3.csv'
-df = pd.read_csv(result_path, encoding='utf-8', dtype={'PathPPS_len': int, 'PathPPS_time': int, 'Real_len': int, 'Acc': float})  # 指定列数据类型
+df = pd.read_csv(result_path, encoding='utf-8', dtype={'PathPPS_len': int, 'PathPPS_time': float, 'Real_len': int, 'Acc': float})  # 指定列数据类型
 
 # min_value = df['Real_len'].min()
 # max_value = df['Real_len'].max()
@@ -12,7 +12,7 @@ df = pd.read_csv(result_path, encoding='utf-8', dtype={'PathPPS_len': int, 'Path
 max_value = 4000
 min_value = 0
 
-n = 6
+n = 8
 bins = np.linspace(min_value, max_value, n + 1).astype(int)
 print("分割点:", bins)
 print("每个区间的长度:", (max_value - min_value) / n)
