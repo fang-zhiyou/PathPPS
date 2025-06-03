@@ -110,8 +110,8 @@ def run_algorithm():
             c = abs(en.vec[2] - new_p.vec[2])
             d = abs(en.vec[3] - new_p.vec[3])
 
-            # new_p.hx = hx_cache[v4[0]]
-            new_p.hx = a + b + c + d
+            # new_p.hx = a + b + c + d
+            new_p.hx = min(a, b, c, d)
 
             new_p.cost = new_p.bc + new_p.hx
             open_set.put(new_p)
